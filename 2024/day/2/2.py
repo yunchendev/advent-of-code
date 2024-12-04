@@ -44,26 +44,35 @@ def is_strictly_decreasing(arr):
         prev = val
     return True
 
-def is_safe(levels):
+def asc_or_desc(levels):
     return is_strictly_decreasing(levels) or is_strictly_increasing(levels)
+
+def is_safe(reports):
+    safe_count = 0
+    for levels in reports:
+        if(asc_or_desc(levels)):
+            safe_count += 1
+        
+    return safe_count
 
 def is_safe_with_dampener(reports):
     safe_count = 0
     
     for levels in reports:
-        if(is_safe(levels)):
+        if(asc_or_desc(levels)):
             safe_count += 1
         else:
             for i in range(len(levels)):
                 modified_level = levels[:i] + levels[i+1:]
-                print(modified_level)
-                if(is_safe(modified_level)):
+                if(asc_or_desc(modified_level)):
                     safe_count += 1
                     break
             
     return safe_count
-    
-print(is_safe_with_dampener(reports))
+
+print(f"Safe count: {is_safe(reports)}")
+
+print(f"Safe count with dampender: {is_safe_with_dampener(reports)}")
     
 
 
